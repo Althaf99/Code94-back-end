@@ -76,6 +76,7 @@ const updateProduct = async (req, res) => {
       req.body.images = imagePaths;
     }
 
+    // Update the product
     const updatedProduct = await Product.findOneAndUpdate(
       { productId: productId },
       req.body,
@@ -87,7 +88,6 @@ const updateProduct = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
 // Delete Product Controller
 const deleteProduct = async (req, res) => {
   const productId = req.params.productId;

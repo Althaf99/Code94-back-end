@@ -35,7 +35,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const corsOptions = {
   origin: "http://localhost:3000", // Allow requests from this origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
-  allowedHeaders: "Content-Type,Authorization", // Allowed headers
+  allowedHeaders: "Content-Type,Authorization,multipart/form-data", // Allowed headers
   credentials: true, // Allow cookies and credentials
 };
 
