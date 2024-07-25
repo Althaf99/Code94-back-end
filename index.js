@@ -32,14 +32,22 @@ app.post("/products", upload.array("images", 5), addProduct);
 // Serve uploaded files statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// CORS configuration
 const corsOptions = {
   origin: "http://localhost:3000", // Allow requests from this origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
-  allowedHeaders: "Content-Type,Authorization,multipart/form-data", // Allowed headers
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"], // Allowed methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
   credentials: true, // Allow cookies and credentials
 };
 
 app.use(cors(corsOptions));
+
+// Access-Control-Allow-Headers middleware
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 const url =
   "mongodb+srv://mongodb:mongodb@mongodbcluster.njohajb.mongodb.net/?retryWrites=true&w=majority&appName=MongoDBCluster";
 mongoose.connect(url, { useNewUrlParser: true });

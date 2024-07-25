@@ -6,7 +6,7 @@ const upload = require("../multerConfig");
 // Correctly using the exported controller functions
 router.get("/", product.getProducts);
 router.post("/", upload.array("images", 5), product.addProduct);
-router.patch("/:productId", upload.array("images", 5), product.updateProduct);
-router.delete("/:productId", product.deleteProduct);
+router.put("/:id", upload.array("images", 5), product.updateProduct);
+router.delete("/:id", product.deleteProduct);
 
 module.exports = router;

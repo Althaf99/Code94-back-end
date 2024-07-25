@@ -47,15 +47,14 @@ const addProduct = async (req, res) => {
   }
 };
 
-// Update Product Controller
 const updateProduct = async (req, res) => {
-  const productId = req.params.productId;
+  const id = req.params.id;
   const { productName, sku, price, productDescription, qty, userId } = req.body;
   const files = req.files;
 
   try {
     // Check if the product exists
-    const product = await Product.findOne({ productId: productId });
+    const product = await Product.findOne({ _id: id });
     if (!product) {
       return res.status(404).json({ message: "Product not found." });
     }
@@ -77,22 +76,20 @@ const updateProduct = async (req, res) => {
     }
 
     // Update the product
-    const updatedProduct = await Product.findOneAndUpdate(
-      { productId: productId },
-      req.body,
-      { new: true }
-    );
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
-// Delete Product Controller
+
 const deleteProduct = async (req, res) => {
-  const productId = req.params.productId;
+  const productId = req.params.id;
   try {
-    const product = await Product.findOneAndDelete({ productId: productId });
+    const product = await Product.findByIdAndDelete({ _id: productId });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found." });
@@ -112,6 +109,7 @@ const deleteProduct = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -120,6 +118,7 @@ const getProducts = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
 module.exports = {
   getProducts,
   updateProduct,
